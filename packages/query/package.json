@@ -1,0 +1,19 @@
+{
+  "name": "@molecular/query",
+  "nx": {
+    "name": "query",
+    "projectType": "library",
+    "sourceRoot": "packages/query/src"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "module": "./dist/index.mjs",
+  "main": "./dist/index.js"
+}

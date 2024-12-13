@@ -1,18 +1,18 @@
 /// <reference types='vitest' />
 import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 import dts from 'vite-plugin-dts';
 import * as path from 'path';
-import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   root: __dirname,
-  cacheDir: '../../node_modules/.vite/packages/core',
+  cacheDir: '../../node_modules/.vite/packages/query',
   plugins: [
+    react(),
     dts({
       entryRoot: 'src',
       tsconfigPath: path.join(__dirname, 'tsconfig.lib.json'),
     }),
-    react(),
   ],
   // Uncomment this if you are using workers.
   // worker: {
@@ -30,7 +30,7 @@ export default defineConfig({
     lib: {
       // Could also be a dictionary or array of multiple entry points.
       entry: 'src/index.ts',
-      name: 'core',
+      name: 'query',
       fileName: 'index',
       // Change this to the formats you want to support.
       // Don't forget to update your package.json as well.
@@ -42,14 +42,13 @@ export default defineConfig({
     },
   },
   test: {
-    watch: process.env.NODE_ENV === 'development',
+    watch: false,
     globals: true,
     environment: 'jsdom',
     include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     reporters: ['default'],
-    setupFiles: ['src/__tests__/test-setup.ts'],
     coverage: {
-      reportsDirectory: '../../coverage/packages/core',
+      reportsDirectory: '../../coverage/packages/query',
       provider: 'v8',
     },
   },
