@@ -101,7 +101,11 @@ importers:
 
   packages/core: {}
 
-  packages/query: {}
+  packages/query:
+    dependencies:
+      '@molecular/core':
+        specifier: workspace:*
+        version: link:../core
 
 packages:
 

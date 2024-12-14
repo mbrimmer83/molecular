@@ -1,6 +1,9 @@
 import type { Atom } from './atom'
 import type { Bond } from './bond'
 
+// Types
+import type { AtomActions } from './atom'
+
 export type Store = {
   get: <T>(atom: Atom<T>) => T
   set: <T>(atom: Atom<T>, newState: T | ((prevState: T) => T)) => T
@@ -37,11 +40,20 @@ export const createStore = (): Store => {
     return updatedState
   }
 
-  const dispatch = <T>(atom: Atom<T>, action: string, ...args: any[]): void => {
-    if (atom.actions && atom.actions[action]) {
-      atom.actions[action](get, set, ...args)
-    } else {
+  const dispatch = async <T>(
+    atom: Atom<T>,
+    action: keyof AtomActions<T>,
+    ...args: any[]
+  ): Promise<void> => {
+    const actionFn = atom.actions[action]
+    if (!actionFn) {
       throw new Error(`Action "${action}" not found on atom.`)
+    }
+
+    const result = actionFn(get, set, ...args)
+
+    if (result instanceof Promise) {
+      await result
     }
   }
 

@@ -29,6 +29,11 @@
     "sourceMap": false,
     "strict": true,
     "target": "es2022",
-    "verbatimModuleSyntax": false
+    "verbatimModuleSyntax": false,
+    "baseUrl": ".",
+    "paths": {
+      "@molecular/core": ["packages/core/src"],
+      "@molecular/query": ["packages/query/src"]
+    }
   }
 }

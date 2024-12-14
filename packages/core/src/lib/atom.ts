@@ -9,13 +9,11 @@ export type AtomType = 'readonly' | 'writable'
 export type Atom<T> = {
   initialState: T
   type: AtomType
-  actions?: {
-    [key: string]: (get: Get<T>, set: Set<T>, ...args: any[]) => void
-  }
+  actions: AtomActions<T>
 }
 
 export type AtomActions<T> = {
-  [key: string]: (get: Get<T>, set: Set<T>) => void
+  [key: string]: (get: Get<T>, set: Set<T>, ...args: any) => T | Promise<T | void> | void
 }
 export function atom<T>(
   initialState: T,
@@ -24,7 +22,9 @@ export function atom<T>(
 ): Atom<T> {
   return {
     initialState,
-    actions,
+    actions: {
+      ...(actions || {})
+    },
     type
   }
 }

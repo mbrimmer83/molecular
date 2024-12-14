@@ -17,6 +17,9 @@ const createTestAtom = () => {
       increment: (get, set) => {
         const { count } = get(testAtom)
         set(testAtom, { count: count + 1 })
+      },
+      init: (_, set) => {
+        set(testAtom, { count: 0 })
       }
     }
   )
@@ -55,6 +58,23 @@ describe('useAtom', () => {
   })
 
   it('subscribes and reacts to state updates correctly', () => {
+    const { result, rerender } = renderHook(() => useAtom(testAtom), { wrapper })
+
+    let [state, actions] = result.current
+
+    expect(state).toEqual({ count: 0 })
+
+    act(() => {
+      actions.increment()
+    })
+
+    rerender()
+    ;[state] = result.current
+
+    expect(state).toEqual({ count: 1 })
+  })
+
+  it('calls init action when atom is initialized by useAtom', () => {
     const { result, rerender } = renderHook(() => useAtom(testAtom), { wrapper })
 
     let [state, actions] = result.current

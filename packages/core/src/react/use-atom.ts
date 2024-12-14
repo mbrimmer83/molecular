@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useAtomValue } from './use-atom-value'
 import { useAtomActions } from './use-atom-actions'
 
@@ -9,6 +10,15 @@ export const useAtom = <T, A extends Record<string, (...args: any[]) => any>>(
 ): [T, Record<keyof A, (...args: any[]) => any>] => {
   const value = useAtomValue(atom)
   const actions = useAtomActions(atom)
+
+  useEffect(() => {
+    const init = async () => {
+      if (actions.init) {
+        await actions.init()
+      }
+    }
+    init()
+  }, [])
 
   return [value, actions]
 }
