@@ -1,0 +1,19 @@
+{
+  "name": "@molecular/list",
+  "nx": {
+    "name": "list",
+    "projectType": "library",
+    "sourceRoot": "packages/list/src"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "module": "./dist/index.mjs",
+  "main": "./dist/index.js"
+}

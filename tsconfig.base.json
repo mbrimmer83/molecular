@@ -33,6 +33,8 @@
     "baseUrl": ".",
     "paths": {
       "@molecular/core": ["packages/core/src"],
+      "@molecular/form": ["packages/form/src"],
+      "@molecular/list": ["packages/list/src"],
       "@molecular/query": ["packages/query/src"]
     }
   }
