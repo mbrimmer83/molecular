@@ -1,6 +1,8 @@
 import { useContext } from 'react'
 import { StoreContext } from './provider'
-import type { Store } from '../lib/store'
+
+// Types
+import type { Store } from '../types'
 
 export const useStore = (): Store => {
   const context = useContext(StoreContext)

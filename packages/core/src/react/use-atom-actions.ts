@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { useStore } from './use-store'
 
 // Types
-import type { Atom } from '../lib/atom'
+import type { Atom } from '../types'
 
 export const useAtomActions = <T, A extends Record<string, (...args: any[]) => any>>(
   atom: Atom<T> & { actions?: A }

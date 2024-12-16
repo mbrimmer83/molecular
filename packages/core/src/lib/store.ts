@@ -1,17 +1,5 @@
-import type { Atom } from './atom'
-import type { Bond } from './bond'
-
 // Types
-import type { AtomActions } from './atom'
-
-export type Store = {
-  get: <T>(atom: Atom<T>) => T
-  set: <T>(atom: Atom<T>, newState: T | ((prevState: T) => T)) => T
-  dispatch: <T>(atom: Atom<T>, action: string, ...args: any[]) => void
-  subscribe: <T>(atom: Atom<T>, callback: () => void) => () => void
-}
-
-type Subscriber<T> = (state: T) => void
+import type { AtomActions, Atom, Bond, Store, Subscriber } from '../types'
 
 export const createStore = (): Store => {
   const state = new WeakMap<Atom<any>, any>()

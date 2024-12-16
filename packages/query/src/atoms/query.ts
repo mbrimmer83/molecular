@@ -1,4 +1,4 @@
-import { atom } from '@molecular/core'
+import { createAtom } from '@molecular/core'
 
 // Types
 import type { Atom } from '@molecular/core'
@@ -11,6 +11,6 @@ const DEFAULT_QUERY_STATE = {
   }
 }
 
-export const createQueryAtom = <T>(): Atom<T> => {
-  return atom(DEFAULT_QUERY_STATE, {}, 'readonly')
+export const createQueryAtom = <T>(key: string): Atom<T> => {
+  return createAtom(key, DEFAULT_QUERY_STATE, {}, 'readonly')
 }

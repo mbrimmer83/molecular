@@ -2,7 +2,7 @@ import React from 'react'
 import { renderHook, act } from '@testing-library/react-hooks'
 import { Provider } from '../react/provider'
 import { useAtom } from '../react/use-atom'
-import { atom } from '../lib/atom'
+import { createAtom } from '../lib/atom'
 
 // Utility to create the wrapper for renderHook
 const createWrapper = () => {
@@ -11,7 +11,8 @@ const createWrapper = () => {
 
 // Utility to create a test atom with a given initial state and actions
 const createTestAtom = () => {
-  const testAtom = atom(
+  const testAtom = createAtom(
+    'testAtom',
     { count: 0 },
     {
       increment: (get, set) => {

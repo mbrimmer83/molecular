@@ -1,6 +1,8 @@
 import { useSyncExternalStore } from 'react'
 import { useStore } from './use-store'
-import type { Atom } from '../lib/atom'
+
+// Types
+import type { Atom } from '../types'
 
 export function useAtomValue<T>(atom: Atom<T>): T {
   const store = useStore()

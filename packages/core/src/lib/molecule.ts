@@ -1,16 +1,26 @@
-import type { Atom } from './atom'
-import type { Bond } from './bond'
+import type { Atom, Bond, Molecule } from '../types'
 
-export type Molecule = {
-  get: (key: string) => any
-  set: (key: string, newState: any) => void
-  push: (key: string) => void
-  registerPush: (key: string, pushFn: () => void) => void
+export const createMolecule = (
+  atoms: Atom<unknown>[],
+  bonds?: Bond<unknown, unknown>[]
+): Molecule => {
+  if (bonds) {
+    const atomSet = new Set(atoms)
+
+    bonds.forEach(({ source, target }) => {
+      if (!atomSet.has(source)) {
+        throw new Error(
+          `Invalid bond: The source atom "${source.key}" is not included in the atoms array.`
+        )
+      }
+
+      if (!atomSet.has(target)) {
+        throw new Error(
+          `Invalid bond: The target atom "${target.key}" is not included in the atoms array.`
+        )
+      }
+    })
+  }
+
+  return { atoms, bonds }
 }
-
-export const createMolecule = (...args: (Atom<any> | Bond<any, any>)[]): Molecule => {
-  const state = new WeakMap<string, any>()
-  const pushFunctions = new Map<string, () => void>()
-}
-
-createMolecule(pipe(QueryAtom, ListAtom, ListItemAtom))

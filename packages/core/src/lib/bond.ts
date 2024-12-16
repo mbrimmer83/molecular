@@ -1,12 +1,4 @@
-import type { Atom, Get, Set } from './atom'
-
-export type Pusher<S, T> = (get: Get<S>, set: Set<T>) => void
-
-export interface Bond<S, T> {
-  source: Atom<S>
-  target: Atom<T>
-  transform: (sourceState: S) => Partial<T>
-}
+import type { Atom, Bond } from '../types'
 
 export function createBond<S, T>(
   source: Atom<S>,

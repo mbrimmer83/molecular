@@ -3,7 +3,7 @@ import { useAtomValue } from './use-atom-value'
 import { useAtomActions } from './use-atom-actions'
 
 // Types
-import type { Atom } from '../lib/atom'
+import type { Atom } from '../types'
 
 export const useAtom = <T, A extends Record<string, (...args: any[]) => any>>(
   atom: Atom<T> & { actions?: A }
