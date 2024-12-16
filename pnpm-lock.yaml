@@ -133,6 +133,8 @@ importers:
 
   packages/form: {}
 
+  packages/list: {}
+
   packages/query:
     dependencies:
       '@molecular/core':
