@@ -29,10 +29,10 @@ export const useMolecule = (molecule: Molecule) => {
     })
 
     // Set up bonds
-    molecule.bonds?.forEach(({ source, target, transform }) => {
+    molecule.bonds?.forEach(({ source, target, push }) => {
       const unsubscribe = store.subscribe(source, () => {
-        const transformedState = transform(store.get(source))
-        store.set(target, transformedState)
+        const state = push(store.get(source))
+        store.set(target, state)
       })
       unsubscribers.push(unsubscribe)
     })

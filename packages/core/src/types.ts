@@ -11,7 +11,7 @@ export type AtomType = 'readonly' | 'writable'
 export type Atom<T> = {
   key: string
   initialState: T
-  type: AtomType
+  kind: string
   actions: AtomActions<T>
 }
 
@@ -22,7 +22,7 @@ export type AtomActions<T> = {
 export interface Bond<S, T> {
   source: Atom<S>
   target: Atom<T>
-  transform: (sourceState: S) => Partial<T>
+  push: (sourceState: S) => Partial<T>
 }
 
 export type Molecule = {
@@ -35,6 +35,7 @@ export type Store = {
   set: <T>(atom: Atom<T>, newState: T | ((prevState: T) => T)) => T
   dispatch: <T>(atom: Atom<T>, action: string, ...args: any[]) => void
   subscribe: <T>(atom: Atom<T>, callback: () => void) => () => void
+  addBond: (molecule: object, bond: Bond<any, any>) => void
 }
 
 export type Subscriber<T> = (state: T) => void

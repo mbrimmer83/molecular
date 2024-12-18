@@ -66,12 +66,12 @@ export const createStore = (): Store => {
     bonds.get(molecule)?.push(bond)
 
     // Subscribe to the source atom
-    const { source, target, transform } = bond
+    const { source, target, push } = bond
     subscribe(source, () => {
-      const transformedState = transform(get(source))
-      set(target, transformedState)
+      const state = push(get(source))
+      set(target, state)
     })
   }
 
-  return { get, set, dispatch, subscribe }
+  return { get, set, dispatch, subscribe, addBond }
 }

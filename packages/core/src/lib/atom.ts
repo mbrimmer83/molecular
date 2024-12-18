@@ -1,10 +1,10 @@
-import type { Atom, AtomActions, AtomType } from '../types'
+import type { Atom, AtomActions } from '../types'
 
 export function createAtom<T>(
   key: string,
   initialState: T,
   actions?: AtomActions<T>,
-  type: AtomType = 'writable'
+  kind = 'standard'
 ): Atom<T> {
   return {
     key,
@@ -12,6 +12,6 @@ export function createAtom<T>(
     actions: {
       ...(actions || {})
     },
-    type
+    kind
   }
 }

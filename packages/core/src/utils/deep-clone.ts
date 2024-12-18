@@ -39,10 +39,10 @@ export function deepClone<T>(value: T): T {
 
   // Handle Object
   if (value && typeof value === 'object') {
-    const result: Record<string, any> = {}
+    const result: Record<string, unknown> = {}
     for (const key in value) {
-      if (value.hasOwnProperty(key)) {
-        result[key] = deepClone((value as Record<string, any>)[key])
+      if (Object.prototype.hasOwnProperty.call(value, key)) {
+        result[key] = deepClone((value as Record<string, unknown>)[key])
       }
     }
     return result as T
