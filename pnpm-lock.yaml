@@ -174,6 +174,15 @@ importers:
 
   apps/documentation:
     dependencies:
+      '@molecular/core':
+        specifier: file:../../packages/core
+        version: link:../../packages/core
+      '@molecular/list':
+        specifier: file:../../packages/list
+        version: link:../../packages/list
+      '@molecular/query':
+        specifier: file:../../packages/query
+        version: file:packages/query
       '@remix-run/node':
         specifier: ^2.14.0
         version: 2.15.1(typescript@5.6.3)
@@ -1322,6 +1331,9 @@ packages:
 
   '@module-federation/webpack-bundler-runtime@0.7.6':
     resolution: {integrity: sha512-kB9hQ0BfwNAcQWGskDEOxYP2z2bB/1ABXKr8MDomCFl2mbW3vvfYMQrb8UhJmJvE3rbGI/iXhJUdgBLNREnjUg==}
+
+  '@molecular/query@file:packages/query':
+    resolution: {directory: packages/query, type: directory}
 
   '@napi-rs/wasm-runtime@0.2.4':
     resolution: {integrity: sha512-9zESzOO5aDByvhIAsOy9TbpZ0Ur2AJbUI7UT73kcUTS2mxAMHOBaa1st/jAymNoCtvrit99kkzT1FZuXVcgfIQ==}
@@ -8135,6 +8147,10 @@ snapshots:
     dependencies:
       '@module-federation/runtime': 0.7.6
       '@module-federation/sdk': 0.7.6
+
+  '@molecular/query@file:packages/query':
+    dependencies:
+      '@molecular/core': link:packages/core
 
   '@napi-rs/wasm-runtime@0.2.4':
     dependencies:

@@ -13,5 +13,8 @@ export function useAtomValue<T>(atom: Atom<T>): T {
 
   const getSnapshot = () => store.get(atom)
 
-  return useSyncExternalStore(subscribe, getSnapshot)
+  // Provide the same snapshot for server rendering
+  const getServerSnapshot = getSnapshot
+
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
 }

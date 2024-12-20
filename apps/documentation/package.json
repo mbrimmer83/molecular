@@ -4,6 +4,9 @@
   "scripts": {},
   "type": "module",
   "dependencies": {
+    "@molecular/core": "file:../../packages/core",
+    "@molecular/list": "file:../../packages/list",
+    "@molecular/query": "file:../../packages/query",
     "@remix-run/node": "^2.14.0",
     "@remix-run/react": "^2.14.0",
     "@remix-run/serve": "^2.14.0",

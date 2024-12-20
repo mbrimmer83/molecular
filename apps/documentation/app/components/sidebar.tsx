@@ -1,7 +1,7 @@
 import { Link } from '@remix-run/react'
-import { useState } from 'react'
+import { useState, memo } from 'react'
 
-export default function Sidebar() {
+function Sidebar() {
   return (
     <div className="w-64 h-screen bg-black text-white">
       <div className="flex items-center space-x-2 p-4 text-lg font-bold">
@@ -22,11 +22,21 @@ export default function Sidebar() {
         />
         <SidebarItem title="API" route="/api" />
         <SidebarItem title="Packages" route="/guides" />
-        <SidebarItem title="Examples" route="/examples" />
+        <SidebarItem
+          title="Examples"
+          route="/examples"
+          subItems={[
+            { title: 'Query', route: '/examples/query' },
+            { title: 'List', route: '/examples/list' },
+            { title: 'Query List', route: '/examples/query-list' }
+          ]}
+        />
       </nav>
     </div>
   )
 }
+
+export default memo(Sidebar)
 
 interface SidebarItemProps {
   title: string

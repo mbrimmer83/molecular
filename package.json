@@ -2,7 +2,9 @@
   "name": "@molecular/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "nuke": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +"
+  },
   "private": true,
   "devDependencies": {
     "@babel/core": "^7.14.5",

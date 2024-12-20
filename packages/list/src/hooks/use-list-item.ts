@@ -1,14 +1,14 @@
-import { useAtomValue, useAtomActions } from '@molecular/core'
+import { useAtomValue, useAtomActions, atomByKind } from '@molecular/core'
 
 // Types
 import type { Molecule } from '@molecular/core'
 import type { ListAtom } from '../types'
 
-export const useListItem = <T>(molecule: Molecule, listAtomKey: string, key: string) => {
-  const listAtom = molecule.atoms.find((atom) => atom.key === listAtomKey) as ListAtom<T>
+export const useListItem = <T>(molecule: Molecule, key: string) => {
+  const listAtom = atomByKind(molecule, '__listAtom') as ListAtom<T>
 
   if (!listAtom) {
-    throw new Error(`List atom with key "${listAtomKey}" not found in molecule.`)
+    throw new Error(`List atom not found in molecule.`)
   }
 
   const listState = useAtomValue(listAtom)
@@ -21,5 +21,5 @@ export const useListItem = <T>(molecule: Molecule, listAtomKey: string, key: str
   const itemState = useAtomValue(itemAtom)
   const actions = useAtomActions(itemAtom)
 
-  return { state: itemState, actions }
+  return [itemState, actions]
 }

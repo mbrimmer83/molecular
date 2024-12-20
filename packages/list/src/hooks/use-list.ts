@@ -1,16 +1,16 @@
-import { useStore, useAtomValue } from '@molecular/core'
+import { useStore, useAtomValue, atomByKind } from '@molecular/core'
 import { useCallback } from 'react'
 
 // Types
 import type { Molecule } from '@molecular/core'
 import type { ListAtom } from '../types'
 
-export const useList = <T>(molecule: Molecule, listAtomKey: string) => {
+export const useList = <T>(molecule: Molecule) => {
   const store = useStore()
-  const listAtom = molecule.atoms.find((atom) => atom.key === listAtomKey) as ListAtom<T>
+  const listAtom = atomByKind(molecule, '__listAtom') as ListAtom<T>
 
   if (!listAtom) {
-    throw new Error(`List atom with key "${listAtomKey}" not found in molecule.`)
+    throw new Error(`List atom not found in molecule.`)
   }
 
   const state = useAtomValue(listAtom)
@@ -19,19 +19,21 @@ export const useList = <T>(molecule: Molecule, listAtomKey: string) => {
     (item: T) => {
       store.dispatch(listAtom, 'addItem', item)
     },
-    [store]
+    [listAtom, store]
   )
 
   const removeItem = useCallback(
     (id: string) => {
       store.dispatch(listAtom, 'removeItem', id)
     },
-    [store]
+    [listAtom, store]
   )
 
-  return {
-    itemIds: Array.from(state.items.keys()),
-    addItem,
-    removeItem
-  }
+  return [
+    Array.from(state.items.keys()),
+    {
+      addItem,
+      removeItem
+    }
+  ]
 }

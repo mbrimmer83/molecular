@@ -32,10 +32,10 @@
     "verbatimModuleSyntax": false,
     "baseUrl": ".",
     "paths": {
-      "@molecular/core": ["packages/core/src"],
-      "@molecular/form": ["packages/form/src"],
-      "@molecular/list": ["packages/list/src"],
-      "@molecular/query": ["packages/query/src"]
+      "@molecular/core": ["packages/core/src/index.ts"],
+      "@molecular/form": ["packages/form/src/index.ts"],
+      "@molecular/list": ["packages/list/src/index.ts"],
+      "@molecular/query": ["packages/query/src/index.ts"]
     }
   }
 }

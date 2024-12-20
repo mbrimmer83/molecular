@@ -2,15 +2,8 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "out-tsc/documentation",
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ES2019"
-    ],
-    "types": [
-      "@remix-run/node",
-      "vite/client"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ES2019"],
+    "types": ["@remix-run/node", "vite/client"],
     "isolatedModules": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",
@@ -22,7 +15,13 @@
     "allowJs": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "rootDir": "."
+    "rootDir": "../../",
+    "paths": {
+      "@molecular/core": ["packages/core/src/index.ts"],
+      "@molecular/form": ["packages/form/src/index.ts"],
+      "@molecular/list": ["packages/list/src/index.ts"],
+      "@molecular/query": ["packages/query/src/index.ts"]
+    }
   },
   "include": [
     "app/**/*.ts",
@@ -32,7 +31,15 @@
     "**/.server/**/*.ts",
     "**/.server/**/*.tsx",
     "**/.client/**/*.ts",
-    "**/.client/**/*.tsx"
+    "**/.client/**/*.tsx",
+    "packages/core/src/**/*.ts",
+    "packages/core/src/**/*.tsx",
+    "packages/form/src/**/*.ts",
+    "packages/form/src/**/*.tsx",
+    "packages/list/src/**/*.ts",
+    "packages/list/src/**/*.tsx",
+    "packages/query/src/**/*.ts",
+    "packages/query/src/**/*.tsx"
   ],
   "exclude": [
     "dist",

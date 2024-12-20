@@ -7,13 +7,17 @@ import type { ListAtom } from '../types'
 export const createListAtom = <T>(
   key: string,
   initialItems: T[],
-  generateId: (item: T) => string
+  generateId: (item: T) => string,
+  addItemActions?: <T>(atom: Atom<T>) => Atom<T>
 ): ListAtom<T> => {
   const itemAtoms = new Map<string, Atom<T>>()
 
   initialItems.forEach((item) => {
     const id = generateId(item)
-    const itemAtom = createAtom(id, { ...item })
+    let itemAtom = createAtom(id, { ...item })
+    if (addItemActions) {
+      itemAtom = addItemActions(itemAtom)
+    }
     itemAtoms.set(id, itemAtom)
   })
 
@@ -21,19 +25,26 @@ export const createListAtom = <T>(
     key,
     { items: itemAtoms },
     {
-      addItem: (get, set, newItem: T) => {
+      addItem: (store, _app, newItem: T) => {
+        const { get, set } = store
         const id = generateId(newItem)
         const current = get(listAtom)
-        const newItemAtom = createAtom(id, { ...newItem })
+        let newItemAtom = createAtom(id, { ...newItem })
+        if (addItemActions) {
+          newItemAtom = addItemActions(newItemAtom)
+        }
+
         current.items.set(id, newItemAtom)
         set(listAtom, { ...current }) // Trigger reactivity
       },
-      removeItem: (get, set, id: string) => {
+      removeItem: (store, _app, id: string) => {
+        const { get, set } = store
         const current = get(listAtom)
         current.items.delete(id)
         set(listAtom, { ...current })
       }
-    }
+    },
+    '__listAtom'
   )
 
   return listAtom

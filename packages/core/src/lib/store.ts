@@ -4,7 +4,7 @@ import type { AtomActions, Atom, Bond, Store, Subscriber } from '../types'
 export const createStore = (): Store => {
   const state = new WeakMap<Atom<any>, any>()
   const subscribers = new Map<any, Set<Subscriber<any>>>()
-  const bonds = new WeakMap<object, Bond<any, any>[]>()
+  const bondSubscribers = new Set<Bond<any, any>>()
 
   const get = <T>(atom: Atom<T>): T => {
     if (!state.has(atom)) {
@@ -38,7 +38,7 @@ export const createStore = (): Store => {
       throw new Error(`Action "${action}" not found on atom.`)
     }
 
-    const result = actionFn(get, set, ...args)
+    const result = actionFn({ get, set, dispatch }, {}, ...args)
 
     if (result instanceof Promise) {
       await result
@@ -59,19 +59,23 @@ export const createStore = (): Store => {
     }
   }
 
-  const addBond = (molecule: object, bond: Bond<any, any>) => {
-    if (!bonds.has(molecule)) {
-      bonds.set(molecule, [])
-    }
-    bonds.get(molecule)?.push(bond)
+  const subscribeBond = (bond: Bond<any, any>): (() => void) => {
+    if (bondSubscribers.has(bond)) return () => null
 
-    // Subscribe to the source atom
-    const { source, target, push } = bond
-    subscribe(source, () => {
-      const state = push(get(source))
-      set(target, state)
+    bondSubscribers.add(bond)
+
+    const unsubscribe = subscribe(bond.source, () => {
+      const sourceState = get(bond.source)
+      const targetState = get(bond.target)
+      // Call push function which will dispatch actions to set state
+      bond.push(sourceState, targetState, dispatch)
     })
+
+    return () => {
+      bondSubscribers.delete(bond)
+      unsubscribe()
+    }
   }
 
-  return { get, set, dispatch, subscribe, addBond }
+  return { get, set, dispatch, subscribe, subscribeBond }
 }
